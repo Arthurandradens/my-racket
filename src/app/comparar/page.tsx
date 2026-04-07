@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Racket } from "@/lib/types";
 import { getRacketBySlug, searchRackets } from "@/lib/rackets";
@@ -10,7 +10,7 @@ import racketData from "@/data/rackets.json";
 const MAX_RACKETS = 3;
 const allRackets = racketData as Racket[];
 
-export default function CompararPage() {
+function CompararContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -198,5 +198,19 @@ export default function CompararPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function CompararPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center">
+          <p className="text-gray-500 text-lg">Carregando comparador...</p>
+        </div>
+      }
+    >
+      <CompararContent />
+    </Suspense>
   );
 }
