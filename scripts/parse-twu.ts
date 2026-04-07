@@ -131,7 +131,7 @@ export function parseTwuCsv(csvContent: string): TwuReview[] {
       row[h.trim()] = (values[idx] ?? "").trim();
     });
 
-    const review = parseTwuRow(row as CsvRow);
+    const review = parseTwuRow(row as unknown as CsvRow);
     if (review && !seen.has(review.normalized_name)) {
       seen.add(review.normalized_name);
       reviews.push(review);
