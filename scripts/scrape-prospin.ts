@@ -6,10 +6,12 @@
  */
 
 import { writeFileSync, mkdirSync } from "node:fs";
-import { resolve } from "node:path";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const BASE_URL = "https://www.prospin.com.br/raquetes/tenis";
-const OUTPUT_PATH = resolve(import.meta.dirname, "..", "data", "prospin-raw.json");
+const OUTPUT_PATH = resolve(__dirname, "..", "data", "prospin-raw.json");
 const DELAY_MS = 1000;
 
 interface ProspinProduct {
@@ -25,37 +27,32 @@ function sleep(ms: number): Promise<void> {
 function extractProducts(html: string): ProspinProduct[] {
   const products: ProspinProduct[] = [];
 
-  // Match product link + image patterns
-  // Product links: <a href="https://www.prospin.com.br/raquete-de-tenis-..." class="product-item-link">
-  const linkRegex = /<a[^>]+href="(https:\/\/www\.prospin\.com\.br\/raquete-de-tenis-[^"]+)"[^>]*class="[^"]*product-item-link[^"]*"[^>]*>/g;
-  const imgRegex = /<img[^>]+class="[^"]*product-image-photo[^"]*"[^>]*>/g;
+  // Product links: <a class="product-item-link" onclick="..." href="URL">Name</a>
+  const linkRegex = /<a\s+class="product-item-link"[^>]*href="(https:\/\/www\.prospin\.com\.br\/[^"]+)"[^>]*>([^<]+)<\/a>/g;
 
-  // Extract all product URLs
-  const urls: string[] = [];
+  // Product images: <img class="... product-image-photo" ... src="..." alt="...">
+  const imgRegex = /<img[^>]*class="[^"]*product-image-photo[^"]*"[^>]*src="([^"]+)"[^>]*>/g;
+
+  // Extract all product links (name + URL)
+  const links: { name: string; url: string }[] = [];
   let linkMatch;
   while ((linkMatch = linkRegex.exec(html)) !== null) {
-    urls.push(linkMatch[1]);
+    links.push({ url: linkMatch[1], name: linkMatch[2].trim() });
   }
 
-  // Extract all product images (name from alt, image from src)
-  const images: { name: string; image: string }[] = [];
+  // Extract all product images
+  const imageUrls: string[] = [];
   let imgMatch;
   while ((imgMatch = imgRegex.exec(html)) !== null) {
-    const tag = imgMatch[0];
-    const altMatch = tag.match(/alt="([^"]+)"/);
-    const srcMatch = tag.match(/src="([^"]+)"/);
-    if (altMatch && srcMatch) {
-      images.push({ name: altMatch[1], image: srcMatch[1] });
-    }
+    imageUrls.push(imgMatch[1]);
   }
 
-  // Pair them up (they appear in the same order in the page)
-  const count = Math.min(urls.length, images.length);
-  for (let i = 0; i < count; i++) {
+  // Pair links with images (they appear in the same order)
+  for (let i = 0; i < links.length; i++) {
     products.push({
-      name: images[i].name,
-      url: urls[i],
-      image: images[i].image,
+      name: links[i].name,
+      url: links[i].url,
+      image: imageUrls[i] || "",
     });
   }
 
@@ -119,7 +116,7 @@ async function main() {
   });
 
   // Ensure output directory exists
-  mkdirSync(resolve(import.meta.dirname, "..", "data"), { recursive: true });
+  mkdirSync(resolve(__dirname, "..", "data"), { recursive: true });
 
   writeFileSync(OUTPUT_PATH, JSON.stringify(unique, null, 2), "utf-8");
   console.log(`\nDone! ${unique.length} unique products saved to data/prospin-raw.json`);
