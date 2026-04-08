@@ -90,8 +90,10 @@ export default function QuizStep({
     pendingAnswer.current = null;
   }
 
-  function onTransitionEnd() {
+  function onTransitionEnd(e: React.TransitionEvent<HTMLDivElement>) {
     if (animState !== "exit") return;
+    if (e.target !== e.currentTarget) return;
+    if (e.propertyName !== "opacity") return;
     if (pendingAnswer.current) {
       onAnswer(pendingAnswer.current.id, pendingAnswer.current.value);
       pendingAnswer.current = null;
