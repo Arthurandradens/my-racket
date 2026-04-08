@@ -17,7 +17,7 @@ export default function RacketCard({
   showCompareButton = false,
   onAddToCompare,
 }: RacketCardProps) {
-  const { slug, brand, model, weight, head_size, ra, price_brl } = racket;
+  const { slug, brand, model, weight, head_size, ra, price_brl, image_url } = racket;
 
   const specs: { label: string; value: string | null }[] = [
     weight !== null ? { label: `${weight}g`, value: null } : null,
@@ -26,7 +26,26 @@ export default function RacketCard({
   ].filter(Boolean) as { label: string; value: string | null }[];
 
   return (
-    <div className="bg-bg-elevated border border-surface rounded-lg hover:border-primary/30 transition-all duration-300 p-5 flex flex-col gap-4 hover:shadow-[0_0_20px_rgba(255,107,53,0.1)]">
+    <div className="bg-bg-elevated border border-surface rounded-lg hover:border-primary/30 transition-all duration-300 flex flex-col sm:flex-row hover:shadow-[0_0_20px_rgba(255,107,53,0.1)] overflow-hidden">
+      {/* Racket image */}
+      <div className="shrink-0 h-52 sm:h-auto sm:w-52 bg-white flex items-center justify-center sm:self-stretch overflow-hidden p-4">
+        {image_url ? (
+          <img
+            src={image_url}
+            alt={`${brand} ${model}`}
+            className="w-full h-full object-contain"
+            loading="lazy"
+          />
+        ) : (
+          <div className="p-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-4 flex-1 min-w-0 p-5">
       <div>
         <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-0.5">
           {brand}
@@ -90,6 +109,7 @@ export default function RacketCard({
             + Comparar
           </button>
         )}
+      </div>
       </div>
     </div>
   );

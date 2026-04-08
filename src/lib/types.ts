@@ -27,6 +27,7 @@ export interface Racket {
   string_pattern: string;
   scores: RacketScores;
   price_brl: number | null;
+  image_url: string | null;
   expert_summary_pt: string | null;
   atp_players: string[];
   wta_players: string[];

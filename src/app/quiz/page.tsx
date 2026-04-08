@@ -55,8 +55,13 @@ export default function QuizPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-xl">
+    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12 relative">
+      {/* Subtle diagonal decoration */}
+      <div
+        className="absolute top-0 right-0 w-32 h-32 bg-primary/10 opacity-50"
+        style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}
+      />
+      <div className="w-full max-w-xl relative z-10">
         <QuizStep
           question={currentQuestion}
           currentStep={stepIndex + 1}

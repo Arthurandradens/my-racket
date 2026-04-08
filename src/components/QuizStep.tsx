@@ -16,14 +16,13 @@ function ContextCard({ text }: { text: string }) {
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="bg-amber-50 border border-amber-200 rounded-xl overflow-hidden">
+    <div className="bg-accent/10 border border-accent/20 rounded-lg overflow-hidden">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         className="w-full flex items-center justify-between px-4 py-3 text-left"
       >
-        <span className="flex items-center gap-2 text-sm font-semibold text-amber-800">
-          <span className="text-base" aria-hidden="true">💡</span>
+        <span className="flex items-center gap-2 text-sm font-semibold text-accent">
           Por que isso importa?
         </span>
         <svg
@@ -36,14 +35,14 @@ function ContextCard({ text }: { text: string }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={`text-amber-600 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`text-accent transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         >
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
       {open && (
         <div className="px-4 pb-4">
-          <p className="text-sm text-amber-900 leading-relaxed">
+          <p className="text-sm text-text-secondary leading-relaxed">
             {text}
           </p>
         </div>
@@ -66,13 +65,13 @@ export default function QuizStep({
     <div className="flex flex-col gap-6 w-full max-w-xl mx-auto">
       {/* Progress bar */}
       <div className="flex flex-col gap-1.5">
-        <div className="flex justify-between text-xs text-gray-500 font-medium">
+        <div className="flex justify-between text-xs text-text-muted font-medium">
           <span>Pergunta {currentStep} de {totalSteps}</span>
           <span>{progressPct}%</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
           <div
-            className="bg-green-500 h-2 rounded-full transition-all duration-300"
+            className="h-2 rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-300"
             style={{ width: `${progressPct}%` }}
           />
         </div>
@@ -83,7 +82,7 @@ export default function QuizStep({
         <button
           type="button"
           onClick={onBack}
-          className="self-start flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          className="self-start flex items-center gap-1.5 text-sm text-text-muted hover:text-text-secondary transition-colors"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -93,7 +92,7 @@ export default function QuizStep({
       )}
 
       {/* Question */}
-      <h2 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+      <h2 className="font-display text-xl sm:text-2xl font-bold text-text uppercase tracking-wide leading-snug">
         {question.text}
       </h2>
 
@@ -103,13 +102,13 @@ export default function QuizStep({
       )}
 
       {/* Options */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-4">
         {question.options.map((option) => (
           <button
             key={option.value}
             type="button"
             onClick={() => onAnswer(question.id, option.value)}
-            className="w-full text-left border border-gray-300 rounded-xl px-5 py-4 text-gray-800 font-medium hover:border-green-500 hover:bg-green-50 hover:text-green-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="w-full text-left bg-bg-elevated border border-surface rounded-lg px-5 py-5 text-text font-medium hover:border-primary hover:shadow-[0_0_15px_rgba(255,107,53,0.15)] transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary"
           >
             {option.label}
           </button>

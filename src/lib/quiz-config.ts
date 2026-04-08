@@ -134,11 +134,11 @@ const INTERMEDIATE_QUESTIONS: QuizQuestion[] = [
     text: "Qual é o seu estilo de jogo predominante?",
     context: "O estilo define quase tudo. Baseliners com topspin pesado se beneficiam de raquetes com cabeça de 97–100 in², padrão 16x19 e swingweight médio-alto. Jogadores de rede precisam de frames mais leves, head-light e mais manobrabilidade.",
     options: [
-      { value: "baseliner_spin", label: "Baseliner com muito topspin" },
-      { value: "baseliner_flat", label: "Baseliner flat — bato limpo e direto" },
-      { value: "counter", label: "Contra-puncher — devolvo tudo e espero o erro" },
-      { value: "rede", label: "Serve & Volley / Rede" },
-      { value: "allcourt", label: "All-court — mudo conforme o ponto" },
+      { value: "baseliner_spin", label: "Fundo de quadra com topspin — jogo com muito efeito" },
+      { value: "baseliner_flat", label: "Fundo de quadra chapado — bato limpo e direto" },
+      { value: "counter", label: "Defensivo — devolvo tudo e espero o erro do adversário" },
+      { value: "rede", label: "Saque e voleio — gosto de subir à rede" },
+      { value: "allcourt", label: "Versátil — mudo o estilo conforme o ponto" },
     ],
   },
   {
@@ -213,13 +213,13 @@ const ADVANCED_QUESTIONS: QuizQuestion[] = [
   {
     id: "estilo_avancado",
     text: "Qual descreve melhor seu jogo atual?",
-    context: "No nível avançado, a distinção entre estilos é muito mais técnica. Baseliners com topspin pesado costumam preferir frames leves de 295–315g com swingweight alto (325+). Flat hitters precisam de raquetes estáveis e pesadas para manter a trajetória limpa.",
+    context: "No nível avançado, a distinção entre estilos é muito mais técnica. Jogadores de fundo com topspin pesado costumam preferir frames leves de 295–315g com swingweight alto (325+). Quem joga chapado precisa de raquetes estáveis e pesadas para manter a trajetória limpa.",
     options: [
-      { value: "heavy_baseliner", label: "Baseliner pesado — topspin e profundidade constantes" },
-      { value: "flat", label: "Flat hitter — velocidade e trajetória plana" },
-      { value: "counter", label: "Counter-puncher — uso o ritmo do adversário" },
-      { value: "allcourt", label: "All-court completo — sirvo bem, sou versátil" },
-      { value: "rede", label: "Net rusher / doubles specialist" },
+      { value: "heavy_baseliner", label: "Fundo pesado — topspin e profundidade constantes" },
+      { value: "flat", label: "Jogo chapado — velocidade e trajetória plana" },
+      { value: "counter", label: "Defensivo — uso o ritmo do adversário contra ele" },
+      { value: "allcourt", label: "Completo — sirvo bem, sou versátil em todas as áreas" },
+      { value: "rede", label: "Especialista em rede / duplas" },
     ],
   },
   {

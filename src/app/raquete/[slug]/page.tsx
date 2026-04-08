@@ -51,7 +51,7 @@ export default async function RaquetePage({ params }: PageProps) {
 
   if (!racket) notFound();
 
-  const { brand, model, year, price_brl, recommended_levels, scores, expert_summary_pt, atp_players, wta_players } = racket;
+  const { brand, model, year, price_brl, recommended_levels, scores, expert_summary_pt, atp_players, wta_players, image_url } = racket;
   const yearStr = year ? ` ${year}` : "";
   const hasProPlayers = atp_players.length > 0 || wta_players.length > 0;
 
@@ -63,7 +63,14 @@ export default async function RaquetePage({ params }: PageProps) {
         <span className="text-text-secondary font-medium">{brand} {model}</span>
       </nav>
 
-      <div className="mb-8">
+      <div className="mb-8 flex flex-col sm:flex-row gap-6">
+        {/* Racket image */}
+        {image_url && (
+          <div className="shrink-0 w-48 h-56 bg-white rounded-lg overflow-hidden flex items-center justify-center p-4">
+            <img src={image_url} alt={`${brand} ${model}`} className="w-full h-full object-contain" />
+          </div>
+        )}
+        <div>
         <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-1">{brand}</p>
         <h1 className="font-display text-2xl sm:text-4xl font-bold text-text uppercase tracking-wide mb-3">{model}{yearStr}</h1>
 
@@ -84,6 +91,7 @@ export default async function RaquetePage({ params }: PageProps) {
             </p>
           )}
           <AffiliateButton brand={brand} model={model} />
+        </div>
         </div>
       </div>
 

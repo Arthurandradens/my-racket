@@ -73,6 +73,7 @@ export function mergeRacketData(
       string_pattern: r.string_pattern,
       scores: twuMatch ? { ...twuMatch.scores } : { ...EMPTY_SCORES },
       price_brl: priceBrl,
+      image_url: r.image_url ?? null,
       expert_summary_pt: r.summaries_expert_en || null,
       atp_players: r.atp_players,
       wta_players: r.wta_players,

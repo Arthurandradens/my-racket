@@ -13,6 +13,7 @@ export interface RacqixRacquet {
   head_size: number;
   string_pattern: string;
   summaries_expert_en: string;
+  image_url: string | null;
   atp_players: string[];
   wta_players: string[];
 }
@@ -33,12 +34,45 @@ export function parseRacqixResponse(response: {
     head_size: r.head_size,
     string_pattern: r.string_pattern,
     summaries_expert_en: r.summaries_expert_en ?? "",
+    image_url: null,
     atp_players: r.atp_players ?? [],
     wta_players: r.wta_players ?? [],
   }));
 }
 
 const RACQIX_URL = "https://www.racqix.com/api/racquets?mode=minimal";
+const RACQIX_DETAIL_URL = "https://www.racqix.com/api/racquets";
+
+async function fetchImageUrl(slug: string): Promise<string | null> {
+  try {
+    const res = await fetch(`${RACQIX_DETAIL_URL}/${slug}`);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.media_image_url ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function fetchImagesInBatches(
+  slugs: string[],
+  batchSize = 20,
+): Promise<Map<string, string>> {
+  const imageMap = new Map<string, string>();
+  for (let i = 0; i < slugs.length; i += batchSize) {
+    const batch = slugs.slice(i, i + batchSize);
+    const results = await Promise.all(
+      batch.map(async (slug) => ({ slug, url: await fetchImageUrl(slug) })),
+    );
+    for (const { slug, url } of results) {
+      if (url) imageMap.set(slug, url);
+    }
+    const done = Math.min(i + batchSize, slugs.length);
+    process.stdout.write(`\r  Images: ${done}/${slugs.length}`);
+  }
+  console.log();
+  return imageMap;
+}
 
 export async function fetchRacqix(): Promise<RacqixRacquet[]> {
   console.log("Fetching from Racqix API...");
@@ -49,6 +83,16 @@ export async function fetchRacqix(): Promise<RacqixRacquet[]> {
   const data = await response.json();
   const racquets = parseRacqixResponse(data);
   console.log(`Fetched ${racquets.length} racquets from Racqix.`);
+
+  console.log("Fetching racquet images...");
+  const slugs = racquets.map((r) => r.slug);
+  const imageMap = await fetchImagesInBatches(slugs);
+  console.log(`Found images for ${imageMap.size}/${racquets.length} racquets.`);
+
+  for (const r of racquets) {
+    r.image_url = imageMap.get(r.slug) ?? null;
+  }
+
   return racquets;
 }
 
