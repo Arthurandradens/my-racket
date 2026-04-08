@@ -19,17 +19,7 @@ export default function QuizPage() {
   function handleAnswer(questionId: string, value: string) {
     let updatedAnswers: Partial<QuizAnswers>;
 
-    if (questionId.startsWith("tech_preferences_")) {
-      const key = questionId.replace("tech_preferences_", "") as keyof import("@/lib/types").TechPreferences;
-      const prevTechPrefs = answers.tech_preferences ?? { weight: "media", balance: "equilibrada", stiffness: "media" };
-      updatedAnswers = {
-        ...answers,
-        tech_preferences: {
-          ...prevTechPrefs,
-          [key]: value,
-        },
-      };
-    } else if (questionId === "level") {
+    if (questionId === "level") {
       const lvl = value as PlayerLevel;
       setLevel(lvl);
       updatedAnswers = { ...answers, level: lvl };
@@ -48,19 +38,32 @@ export default function QuizPage() {
     }
   }
 
+  function handleBack() {
+    if (stepIndex <= 0) return;
+    const prevIndex = stepIndex - 1;
+    const prevQuestion = flow[prevIndex];
+
+    const updatedAnswers = { ...answers };
+    delete (updatedAnswers as Record<string, unknown>)[currentQuestion.id];
+
+    if (prevQuestion.id === "level") {
+      setLevel(null);
+    }
+
+    setAnswers(updatedAnswers);
+    setStepIndex(prevIndex);
+  }
+
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12 relative">
-      {/* Subtle diagonal decoration */}
-      <div
-        className="absolute top-0 right-0 w-32 h-32 bg-primary/10 opacity-50"
-        style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}
-      />
-      <div className="w-full max-w-xl relative z-10">
+    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-xl">
         <QuizStep
           question={currentQuestion}
           currentStep={stepIndex + 1}
           totalSteps={totalSteps}
           onAnswer={handleAnswer}
+          onBack={handleBack}
+          canGoBack={stepIndex > 0}
         />
       </div>
     </div>
