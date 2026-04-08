@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { QuizAnswers, ScoredRacket, Racket, SpecRecommendation, EducationBlock, InjuryAlert } from "@/lib/types";
@@ -11,42 +11,52 @@ import racketData from "@/data/rackets.json";
 
 const rackets = racketData as Racket[];
 
-export default function ResultadoPage() {
-  const router = useRouter();
-  const [top3, setTop3] = useState<ScoredRacket[]>([]);
-  const [more, setMore] = useState<ScoredRacket[]>([]);
-  const [showMore, setShowMore] = useState(false);
-  const [compareList, setCompareList] = useState<string[]>([]);
-  const [loaded, setLoaded] = useState(false);
-  const [specProfile, setSpecProfile] = useState<SpecRecommendation[]>([]);
-  const [eduBlocks, setEduBlocks] = useState<EducationBlock[]>([]);
-  const [injuryAlert, setInjuryAlert] = useState<InjuryAlert | null>(null);
+interface ResultData {
+  top3: ScoredRacket[];
+  more: ScoredRacket[];
+  specProfile: SpecRecommendation[];
+  eduBlocks: EducationBlock[];
+  injuryAlert: InjuryAlert | null;
+}
 
-  useEffect(() => {
+function useQuizResults(): ResultData | null {
+  return useMemo(() => {
+    if (typeof window === "undefined") return null;
+
     const raw = sessionStorage.getItem("quizAnswers");
-    if (!raw) {
-      router.replace("/quiz");
-      return;
-    }
+    if (!raw) return null;
 
     let answers: QuizAnswers;
     try {
       answers = JSON.parse(raw) as QuizAnswers;
     } catch {
-      router.replace("/quiz");
-      return;
+      return null;
     }
 
     const top = recommend(rackets, answers, 3);
     const rest = recommend(rackets, answers, 10).slice(3);
 
-    setTop3(top);
-    setMore(rest);
-    setSpecProfile(generateSpecProfile(answers));
-    setEduBlocks(generateEducationBlocks(answers));
-    setInjuryAlert(generateInjuryAlert(answers));
-    setLoaded(true);
-  }, [router]);
+    return {
+      top3: top,
+      more: rest,
+      specProfile: generateSpecProfile(answers),
+      eduBlocks: generateEducationBlocks(answers),
+      injuryAlert: generateInjuryAlert(answers),
+    };
+  }, []);
+}
+
+export default function ResultadoPage() {
+  const router = useRouter();
+  const data = useQuizResults();
+  const [showMore, setShowMore] = useState(false);
+  const [compareList, setCompareList] = useState<string[]>([]);
+
+  const top3 = data?.top3 ?? [];
+  const more = data?.more ?? [];
+  const specProfile = data?.specProfile ?? [];
+  const eduBlocks = data?.eduBlocks ?? [];
+  const injuryAlert = data?.injuryAlert ?? null;
 
   function handleAddToCompare(racket: Racket) {
     setCompareList((prev) => {
@@ -62,15 +72,7 @@ export default function ResultadoPage() {
     router.push(`/comparar?r=${compareList.join(",")}`);
   }
 
-  if (!loaded) {
-    return (
-      <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center">
-        <p className="text-gray-500 text-lg">Calculando suas recomendações...</p>
-      </div>
-    );
-  }
-
-  if (top3.length === 0) {
+  if (!data || top3.length === 0) {
     return (
       <div className="min-h-[calc(100vh-8rem)] flex flex-col items-center justify-center gap-6 px-4">
         <p className="text-gray-700 text-lg text-center">

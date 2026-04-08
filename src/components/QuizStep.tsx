@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { QuizQuestion } from "@/lib/types";
 
 interface QuizStepProps {
@@ -12,6 +12,46 @@ interface QuizStepProps {
   canGoBack?: boolean;
 }
 
+function ContextCard({ text }: { text: string }) {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <div className="bg-amber-50 border border-amber-200 rounded-xl overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between px-4 py-3 text-left"
+      >
+        <span className="flex items-center gap-2 text-sm font-semibold text-amber-800">
+          <span className="text-base" aria-hidden="true">💡</span>
+          Por que isso importa?
+        </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={`text-amber-600 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      {open && (
+        <div className="px-4 pb-4">
+          <p className="text-sm text-amber-900 leading-relaxed">
+            {text}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function QuizStep({
   question,
   currentStep,
@@ -21,11 +61,6 @@ export default function QuizStep({
   canGoBack = false,
 }: QuizStepProps) {
   const progressPct = Math.round((currentStep / totalSteps) * 100);
-  const [contextOpen, setContextOpen] = useState(true);
-
-  useEffect(() => {
-    setContextOpen(true);
-  }, [question.id]);
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-xl mx-auto">
@@ -62,41 +97,9 @@ export default function QuizStep({
         {question.text}
       </h2>
 
-      {/* Educational context */}
+      {/* Educational context — key resets open state on question change */}
       {question.context && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl overflow-hidden">
-          <button
-            type="button"
-            onClick={() => setContextOpen((v) => !v)}
-            className="w-full flex items-center justify-between px-4 py-3 text-left"
-          >
-            <span className="flex items-center gap-2 text-sm font-semibold text-amber-800">
-              <span className="text-base" aria-hidden="true">💡</span>
-              Por que isso importa?
-            </span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={`text-amber-600 transition-transform duration-200 ${contextOpen ? "rotate-180" : ""}`}
-            >
-              <path d="m6 9 6 6 6-6" />
-            </svg>
-          </button>
-          {contextOpen && (
-            <div className="px-4 pb-4">
-              <p className="text-sm text-amber-900 leading-relaxed">
-                {question.context}
-              </p>
-            </div>
-          )}
-        </div>
+        <ContextCard key={question.id} text={question.context} />
       )}
 
       {/* Options */}
