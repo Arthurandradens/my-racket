@@ -26,7 +26,6 @@ export default function RaquetesPage() {
 
     if (searchQuery.length >= 2) {
       result = searchRackets(result, searchQuery);
-      // If brand filter is also applied, intersect
       if (selectedBrand) {
         const brandSet = new Set(getRacketsByBrand(allRackets, selectedBrand).map((r) => r.slug));
         result = searchRackets(allRackets, searchQuery).filter((r) => brandSet.has(r.slug));
@@ -41,67 +40,57 @@ export default function RaquetesPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      {/* Page header */}
       <div className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-2">
+        <h1 className="font-display text-2xl sm:text-4xl font-bold text-text uppercase tracking-wide mb-2">
           Catalogo de Raquetes
         </h1>
-        <p className="text-gray-500 text-base">
+        <p className="text-text-secondary text-base">
           {totalRackets} raquetes de {totalBrands} marcas
         </p>
       </div>
 
-      {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-8">
         <div className="flex-1">
-          <label htmlFor="search" className="sr-only">
-            Buscar raquetes
-          </label>
+          <label htmlFor="search" className="sr-only">Buscar raquetes</label>
           <input
             id="search"
             type="text"
             placeholder="Buscar por marca ou modelo..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+            className="w-full bg-bg-subtle border border-surface rounded-lg px-4 py-2.5 text-sm text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
           />
         </div>
         <div className="sm:w-56">
-          <label htmlFor="brand" className="sr-only">
-            Filtrar por marca
-          </label>
+          <label htmlFor="brand" className="sr-only">Filtrar por marca</label>
           <select
             id="brand"
             value={selectedBrand}
             onChange={(e) => setSelectedBrand(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition bg-white"
+            className="w-full bg-bg-subtle border border-surface rounded-lg px-4 py-2.5 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition"
           >
             <option value="">Todas as marcas</option>
             {allBrands.map((brand) => (
-              <option key={brand} value={brand}>
-                {brand}
-              </option>
+              <option key={brand} value={brand}>{brand}</option>
             ))}
           </select>
         </div>
       </div>
 
-      {/* Results count */}
-      <p className="text-sm text-gray-500 mb-4">
+      <p className="text-sm text-text-muted mb-4">
         {filtered.length === 0
           ? "Nenhuma raquete encontrada"
           : `Exibindo ${filtered.length}${filtered.length === MAX_DISPLAY ? "+" : ""} raquetes`}
       </p>
 
-      {/* Grid */}
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {filtered.map((racket) => (
-            <RacketCatalogCard key={racket.slug} racket={racket} />
+            <CatalogCard key={racket.slug} racket={racket} />
           ))}
         </div>
       ) : (
-        <div className="py-20 text-center text-gray-400">
+        <div className="py-20 text-center text-text-muted">
           <p className="text-lg font-medium">Nenhuma raquete encontrada.</p>
           <p className="text-sm mt-1">Tente ajustar sua busca ou filtro de marca.</p>
         </div>
@@ -110,7 +99,7 @@ export default function RaquetesPage() {
   );
 }
 
-function RacketCatalogCard({ racket }: { racket: Racket }) {
+function CatalogCard({ racket }: { racket: Racket }) {
   const { slug, brand, model, weight, head_size, ra, price_brl } = racket;
 
   const specChips: string[] = [];
@@ -119,46 +108,28 @@ function RacketCatalogCard({ racket }: { racket: Racket }) {
   if (ra) specChips.push(`RA ${ra}`);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-5 flex flex-col gap-4">
-      {/* Brand & model */}
+    <div className="bg-bg-elevated border border-surface rounded-lg hover:border-primary/30 transition-all duration-300 p-5 flex flex-col gap-4 hover:shadow-[0_0_20px_rgba(255,107,53,0.1)]">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-green-600 mb-0.5">
-          {brand}
-        </p>
-        <Link
-          href={`/raquete/${slug}`}
-          className="text-base font-bold text-gray-900 hover:text-green-600 transition-colors leading-snug"
-        >
+        <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-0.5">{brand}</p>
+        <Link href={`/raquete/${slug}`} className="text-base font-bold text-text hover:text-primary transition-colors leading-snug">
           {model}
         </Link>
       </div>
 
-      {/* Spec chips */}
       {specChips.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {specChips.map((chip) => (
-            <span
-              key={chip}
-              className="bg-gray-100 text-gray-600 text-xs font-medium px-3 py-1 rounded-full"
-            >
-              {chip}
-            </span>
+            <span key={chip} className="bg-bg-subtle text-text-secondary text-xs font-medium px-3 py-1 rounded">{chip}</span>
           ))}
         </div>
       )}
 
-      {/* Price */}
       {price_brl !== null && (
-        <p className="text-base font-bold text-gray-900">
-          R${" "}
-          {price_brl.toLocaleString("pt-BR", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}
+        <p className="text-base font-bold text-text">
+          R$ {price_brl.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </p>
       )}
 
-      {/* Buy button */}
       <div className="mt-auto">
         <AffiliateButton brand={brand} model={model} />
       </div>
