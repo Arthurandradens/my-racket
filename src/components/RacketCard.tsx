@@ -98,7 +98,7 @@ export default function RacketCard({
       )}
 
       <div className="flex flex-wrap items-center gap-3 mt-auto pt-1">
-        <AffiliateButton brand={brand} model={model} />
+        <AffiliateButton slug={slug} brand={brand} model={model} />
 
         {showCompareButton && onAddToCompare && (
           <button

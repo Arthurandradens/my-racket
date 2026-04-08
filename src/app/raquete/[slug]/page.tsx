@@ -90,7 +90,7 @@ export default async function RaquetePage({ params }: PageProps) {
               R$ {price_brl.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </p>
           )}
-          <AffiliateButton brand={brand} model={model} />
+          <AffiliateButton slug={racket.slug} brand={brand} model={model} />
         </div>
         </div>
       </div>

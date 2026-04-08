@@ -137,7 +137,7 @@ function CatalogCard({ racket }: { racket: Racket }) {
       )}
 
       <div className="mt-auto">
-        <AffiliateButton brand={brand} model={model} />
+        <AffiliateButton slug={slug} brand={brand} model={model} />
       </div>
     </div>
   );

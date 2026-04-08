@@ -134,7 +134,7 @@ export default function CompareTable({ rackets, matchSlug }: CompareTableProps) 
                 R$ {r.price_brl.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
             )}
-            <AffiliateButton brand={r.brand} model={r.model} />
+            <AffiliateButton slug={r.slug} brand={r.brand} model={r.model} />
           </div>
         ))}
       </div>
