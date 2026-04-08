@@ -50,7 +50,7 @@ export interface IdealProfile {
   pattern_importance: number;
 }
 
-export type PlayerLevel = "iniciante" | "basico-intermediario" | "intermediario" | "avancado";
+export type PlayerLevel = "iniciante" | "basico-intermediario" | "intermediario" | "avancado" | "junior";
 
 export interface QuizAnswers {
   level: PlayerLevel;
@@ -78,6 +78,12 @@ export interface QuizAnswers {
   swingweight?: string;
   lesao_avancado?: string;
   corda_atual?: string;
+  // Junior
+  altura?: string;
+  idade?: string;
+  nivel_junior?: string;
+  queixa?: string;
+  objetivo_junior?: string;
 }
 
 export interface QuizQuestion {
@@ -109,4 +115,24 @@ export interface InjuryAlert {
   severity: "warning" | "urgent";
   title: string;
   recommendations: string[];
+}
+
+export interface JuniorAlert {
+  severity: "urgent" | "info";
+  title: string;
+  message: string;
+}
+
+export interface JuniorResult {
+  racketSize: string;
+  racketType: "recreativa" | "intermediate" | "performance";
+  material: string;
+  ballStage: string;
+  court: string;
+  lesaoAlert: JuniorAlert | null;
+  transicaoAlert: JuniorAlert | null;
+  educationBlocks: EducationBlock[];
+  rackets: Racket[];
+  investmentLevel: "baixo" | "medio" | "alto";
+  trocaPrevisao: string;
 }
