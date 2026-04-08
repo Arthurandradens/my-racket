@@ -19,7 +19,6 @@ export default function QuizPage() {
   function handleAnswer(questionId: string, value: string) {
     let updatedAnswers: Partial<QuizAnswers>;
 
-    // Handle tech_preferences_* questions — merge into tech_preferences object
     if (questionId.startsWith("tech_preferences_")) {
       const key = questionId.replace("tech_preferences_", "") as keyof import("@/lib/types").TechPreferences;
       const prevTechPrefs = answers.tech_preferences ?? { weight: "media", balance: "equilibrada", stiffness: "media" };
@@ -42,7 +41,6 @@ export default function QuizPage() {
 
     const nextIndex = stepIndex + 1;
     if (nextIndex >= totalSteps) {
-      // Last question — store answers and navigate to results
       sessionStorage.setItem("quizAnswers", JSON.stringify(updatedAnswers));
       router.push("/resultado");
     } else {
@@ -51,8 +49,13 @@ export default function QuizPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-xl">
+    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4 py-12 relative">
+      {/* Subtle diagonal decoration */}
+      <div
+        className="absolute top-0 right-0 w-32 h-32 bg-primary/10 opacity-50"
+        style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}
+      />
+      <div className="w-full max-w-xl relative z-10">
         <QuizStep
           question={currentQuestion}
           currentStep={stepIndex + 1}
