@@ -1,12 +1,14 @@
-import { generateAffiliateLink } from "@/lib/affiliate";
+import { generateAffiliateLink, hasProspinLink } from "@/lib/affiliate";
 
 interface AffiliateButtonProps {
+  slug: string;
   brand: string;
   model: string;
 }
 
-export default function AffiliateButton({ brand, model }: AffiliateButtonProps) {
-  const href = generateAffiliateLink(brand, model);
+export default function AffiliateButton({ slug, brand, model }: AffiliateButtonProps) {
+  const href = generateAffiliateLink(slug, brand, model);
+  const isProSpin = hasProspinLink(slug);
 
   return (
     <a
@@ -20,7 +22,7 @@ export default function AffiliateButton({ brand, model }: AffiliateButtonProps) 
         <circle cx="20" cy="21" r="1" />
         <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
       </svg>
-      Comprar
+      {isProSpin ? "Comprar na Pro Spin" : "Buscar nas lojas"}
     </a>
   );
 }
