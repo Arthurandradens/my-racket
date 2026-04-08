@@ -7,6 +7,7 @@ const ALL_LEVELS: PlayerLevel[] = [
   "basico-intermediario",
   "intermediario",
   "avancado",
+  "junior",
 ];
 
 describe("getQuizFlow", () => {
@@ -17,11 +18,18 @@ describe("getQuizFlow", () => {
     }
   });
 
-  it("level question has 4 options for 4 levels", () => {
+  it("level question has 5 options for 5 levels", () => {
     const flow = getQuizFlow("iniciante");
-    expect(flow[0].options).toHaveLength(4);
+    expect(flow[0].options).toHaveLength(5);
     const values = flow[0].options.map((o) => o.value);
     expect(values).toEqual(ALL_LEVELS);
+  });
+
+  it("returns 6 questions for junior (level + 5)", () => {
+    const flow = getQuizFlow("junior");
+    expect(flow).toHaveLength(6);
+    const ids = flow.map((q) => q.id);
+    expect(ids).toEqual(["level", "altura", "idade", "nivel_junior", "queixa", "objetivo_junior"]);
   });
 
   it("returns 6 questions for iniciante (level + 5)", () => {
