@@ -63,3 +63,27 @@ body {
     opacity: 1;
   }
 }
+
+/* Scroll reveal animations */
+.scroll-reveal {
+  opacity: 0;
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+.scroll-reveal-up {
+  transform: translateY(40px);
+}
+
+.scroll-reveal-left {
+  transform: translateX(-40px);
+}
+
+.scroll-reveal-right {
+  transform: translateX(40px);
+}
+
+.scroll-reveal-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+}
