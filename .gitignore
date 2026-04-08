@@ -45,3 +45,6 @@ data/pipeline/
 
 # superpowers
 .superpowers/
+
+# prospin scraping
+data/prospin-raw.json
