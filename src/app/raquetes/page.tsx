@@ -4,11 +4,22 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import type { Racket } from "@/lib/types";
 import { getAllRackets, getAllBrands, searchRackets, getRacketsByBrand } from "@/lib/rackets";
+import { hasProspinLink } from "@/lib/affiliate";
 import racketData from "@/data/rackets.json";
 import AffiliateButton from "@/components/AffiliateButton";
 
 const rackets = racketData as Racket[];
-const allRackets = getAllRackets(rackets);
+const allRackets = getAllRackets(rackets).sort((a, b) => {
+  // 1. Rackets with Pro Spin link first
+  const aLink = hasProspinLink(a.slug) ? 1 : 0;
+  const bLink = hasProspinLink(b.slug) ? 1 : 0;
+  if (bLink !== aLink) return bLink - aLink;
+
+  // 2. Most recent year first
+  const aYear = a.year ? parseInt(a.year) : 0;
+  const bYear = b.year ? parseInt(b.year) : 0;
+  return bYear - aYear;
+});
 const allBrands = getAllBrands(rackets);
 
 const MAX_DISPLAY = 50;
