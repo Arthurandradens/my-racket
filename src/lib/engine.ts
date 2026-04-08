@@ -77,6 +77,9 @@ export function buildIdealProfile(answers: QuizAnswers): IdealProfile {
     case "avancado":
       base = cloneProfile(ADVANCED_DEFAULTS);
       break;
+    default:
+      base = cloneProfile(BEGINNER_DEFAULTS);
+      break;
   }
 
   // Iniciante adjustments

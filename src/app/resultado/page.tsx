@@ -4,8 +4,11 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { QuizAnswers, ScoredRacket, Racket, SpecRecommendation, EducationBlock, InjuryAlert } from "@/lib/types";
+import type { JuniorResult as JuniorResultType } from "@/lib/types";
 import { recommend, generateSpecProfile, generateEducationBlocks, generateInjuryAlert } from "@/lib/engine";
+import { recommendJunior } from "@/lib/junior-engine";
 import { generateProfile } from "@/lib/profile";
+import JuniorResult from "@/components/JuniorResult";
 import RacketCard from "@/components/RacketCard";
 import ScoresBar from "@/components/ScoresBar";
 import racketData from "@/data/rackets.json";
@@ -27,6 +30,11 @@ interface ResultData {
   answers: QuizAnswers;
 }
 
+interface JuniorResultData {
+  result: JuniorResultType;
+  answers: QuizAnswers;
+}
+
 export default function ResultadoPage() {
   const router = useRouter();
   const [showMore, setShowMore] = useState(false);
@@ -35,6 +43,7 @@ export default function ResultadoPage() {
   const [loadingStep, setLoadingStep] = useState(0);
   const hasRun = useRef(false);
   const [data, setData] = useState<ResultData | null>(null);
+  const [juniorData, setJuniorData] = useState<JuniorResultData | null>(null);
 
   useEffect(() => {
     if (hasRun.current) return;
@@ -51,6 +60,18 @@ export default function ResultadoPage() {
       answers = JSON.parse(raw) as QuizAnswers;
     } catch {
       router.replace("/quiz");
+      return;
+    }
+
+    if (answers.level === "junior") {
+      const result = recommendJunior(rackets, answers);
+      setJuniorData({ result, answers });
+
+      setTimeout(() => {
+        setPhase("reveal");
+        setTimeout(() => setPhase("done"), 800);
+      }, 2500);
+
       return;
     }
 
@@ -139,6 +160,31 @@ export default function ResultadoPage() {
             className="h-2 rounded-full bg-gradient-to-r from-primary to-accent transition-all duration-1000 ease-out"
             style={{ width: `${((loadingStep + 1) / LOADING_STEPS.length) * 100}%` }}
           />
+        </div>
+      </div>
+    );
+  }
+
+  // Junior result
+  if (juniorData) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-12 flex flex-col gap-12">
+        <JuniorResult result={juniorData.result} />
+
+        {/* Bottom actions */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-surface">
+          <Link
+            href="/quiz"
+            className="border border-surface text-text-secondary font-semibold px-6 py-3 rounded hover:border-primary hover:text-primary transition-colors"
+          >
+            Refazer quiz
+          </Link>
+          <Link
+            href="/raquetes"
+            className="bg-primary text-white font-bold px-6 py-3 rounded uppercase tracking-wide hover:bg-primary-hover transition-colors"
+          >
+            Ver catálogo completo
+          </Link>
         </div>
       </div>
     );
