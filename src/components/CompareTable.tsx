@@ -15,16 +15,16 @@ type RowConfig = {
 
 const SPEC_ROWS: RowConfig[] = [
   { label: "Peso", getValue: (r) => r.weight, higherIsBetter: false, unit: "g" },
-  { label: "Cabeca", getValue: (r) => r.head_size, higherIsBetter: true, unit: "in²" },
+  { label: "Cabeça", getValue: (r) => r.head_size, higherIsBetter: true, unit: "in²" },
   { label: "Rigidez", getValue: (r) => r.ra, higherIsBetter: false, unit: "RA" },
-  { label: "Balanco", getValue: (r) => r.balance_mm, higherIsBetter: false, unit: "mm" },
+  { label: "Balanço", getValue: (r) => r.balance_mm, higherIsBetter: false, unit: "mm" },
   { label: "Swingweight", getValue: (r) => r.swingweight, higherIsBetter: false },
   { label: "Encordoamento", getValue: (r) => r.string_pattern, higherIsBetter: undefined },
 ];
 
 const SCORE_ROWS: RowConfig[] = [
   { label: "Overall", getValue: (r) => r.scores.overall, higherIsBetter: true },
-  { label: "Potencia", getValue: (r) => r.scores.power, higherIsBetter: true },
+  { label: "Potência", getValue: (r) => r.scores.power, higherIsBetter: true },
   { label: "Controle", getValue: (r) => r.scores.control, higherIsBetter: true },
   { label: "Conforto", getValue: (r) => r.scores.comfort, higherIsBetter: true },
   { label: "Topspin", getValue: (r) => r.scores.topspin, higherIsBetter: true },
@@ -149,7 +149,7 @@ export default function CompareTable({ rackets, matchSlug }: CompareTableProps) 
       {/* Specs comparison */}
       <div className="bg-bg-elevated border border-surface rounded-lg overflow-hidden">
         <div className="px-4 py-3 border-b border-surface">
-          <h3 className="text-xs font-bold uppercase tracking-wide text-text-muted">Especificacoes</h3>
+          <h3 className="text-xs font-bold uppercase tracking-wide text-text-muted">Especificações</h3>
         </div>
         <div className="flex flex-col">
           {SPEC_ROWS.map((row) => {

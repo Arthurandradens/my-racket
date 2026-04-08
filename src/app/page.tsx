@@ -48,7 +48,7 @@ export default function Home() {
                 href="/raquetes"
                 className="inline-block border border-surface text-text-secondary font-semibold text-sm sm:text-base px-8 py-4 rounded hover:border-primary hover:text-primary transition-colors text-center"
               >
-                Ver Catalogo
+                Ver Catálogo
               </Link>
             </div>
           </ScrollReveal>
@@ -68,7 +68,7 @@ export default function Home() {
               {
                 num: "01",
                 title: "Quiz",
-                desc: "Responda perguntas rapidas sobre seu nivel, frequencia de jogo, estilo e preferencias.",
+                desc: "Responda perguntas rápidas sobre seu nível, frequência de jogo, estilo e preferências.",
               },
               {
                 num: "02",
@@ -78,7 +78,7 @@ export default function Home() {
               {
                 num: "03",
                 title: "Compare",
-                desc: "Compare as raquetes sugeridas lado a lado por specs, scores e preco.",
+                desc: "Compare as raquetes sugeridas lado a lado por specs, scores e preço.",
               },
             ].map((step, i) => (
               <ScrollReveal key={step.num} delay={i * 200}>
@@ -105,8 +105,8 @@ export default function Home() {
         <div className="relative max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8 text-center w-full">
           {[
             { value: "1000+", label: "Raquetes avaliadas" },
-            { value: "6", label: "Metricas de analise" },
-            { value: "3", label: "Niveis de jogador" },
+            { value: "6", label: "Métricas de análise" },
+            { value: "3", label: "Níveis de jogador" },
           ].map((stat, i) => (
             <ScrollReveal key={stat.label} delay={i * 200}>
               <p className="font-display text-4xl sm:text-5xl font-bold text-accent">

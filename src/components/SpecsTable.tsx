@@ -7,11 +7,11 @@ interface SpecsTableProps {
 export default function SpecsTable({ racket }: SpecsTableProps) {
   const rows: { label: string; value: string | number | null }[] = [
     { label: "Peso", value: racket.weight !== null ? `${racket.weight} g` : null },
-    { label: "Cabeca", value: racket.head_size ? `${racket.head_size} in²` : null },
+    { label: "Cabeça", value: racket.head_size ? `${racket.head_size} in²` : null },
     { label: "Rigidez (RA)", value: racket.ra ?? null },
-    { label: "Balanco", value: racket.balance_mm !== null ? `${racket.balance_mm} mm` : null },
+    { label: "Balanço", value: racket.balance_mm !== null ? `${racket.balance_mm} mm` : null },
     { label: "Swingweight", value: racket.swingweight !== null ? racket.swingweight : null },
-    { label: "Padrao de corda", value: racket.string_pattern ?? null },
+    { label: "Padrão de corda", value: racket.string_pattern ?? null },
   ];
 
   return (

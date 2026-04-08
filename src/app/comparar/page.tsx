@@ -70,7 +70,7 @@ function CompararContent() {
         <h1 className="font-display text-2xl sm:text-4xl font-bold text-text uppercase tracking-wide mb-3">
           Comparador de raquetes
         </h1>
-        <p className="text-text-secondary text-lg">Selecione ate 3 raquetes para comparar lado a lado.</p>
+        <p className="text-text-secondary text-lg">Selecione até 3 raquetes para comparar lado a lado.</p>
       </div>
 
       <div className="flex flex-col gap-4">
@@ -126,7 +126,7 @@ function CompararContent() {
             </svg>
           </div>
           <p className="text-text-secondary font-medium text-lg">Nenhuma raquete selecionada</p>
-          <p className="text-text-muted text-sm max-w-xs">Use a busca acima para adicionar raquetes a comparacao.</p>
+          <p className="text-text-muted text-sm max-w-xs">Use a busca acima para adicionar raquetes à comparação.</p>
         </div>
       )}
     </div>

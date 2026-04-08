@@ -8,15 +8,15 @@ interface PlayerProfile {
 
 const LEVEL_LABELS: Record<string, string> = {
   iniciante: "Iniciante",
-  "basico-intermediario": "Basico-Intermediario",
-  intermediario: "Intermediario",
-  avancado: "Avancado",
+  "basico-intermediario": "Básico-Intermediário",
+  intermediario: "Intermediário",
+  avancado: "Avançado",
 };
 
 const LEVEL_DESCRIPTIONS: Record<string, string> = {
   iniciante: "jogador iniciante",
   "basico-intermediario": "jogador em desenvolvimento",
-  intermediario: "jogador de nivel intermediario",
+  intermediario: "jogador de nível intermediário",
   avancado: "jogador experiente",
 };
 
@@ -53,7 +53,7 @@ export function generateProfile(answers: QuizAnswers): PlayerProfile {
   // Injury tag
   const injuryField = answers.lesao ?? answers.lesao_avancado;
   if (injuryField && injuryField !== "sem_lesao" && injuryField !== "sem") {
-    tags.push("Protecao de Lesao");
+    tags.push("Proteção de lesão");
   }
 
   // Build title

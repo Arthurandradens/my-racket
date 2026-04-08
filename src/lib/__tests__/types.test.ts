@@ -79,14 +79,14 @@ describe("type contracts", () => {
       id: "test",
       text: "Pergunta?",
       context: "Explicacao educativa...",
-      options: [{ value: "a", label: "Opcao A" }],
+      options: [{ value: "a", label: "Opção A" }],
     };
     expect(withContext.context).toBeDefined();
 
     const withoutContext: QuizQuestion = {
       id: "test2",
       text: "Outra pergunta?",
-      options: [{ value: "b", label: "Opcao B" }],
+      options: [{ value: "b", label: "Opção B" }],
     };
     expect(withoutContext.context).toBeUndefined();
   });
@@ -112,7 +112,7 @@ describe("type contracts", () => {
   it("InjuryAlert has severity, title, recommendations", () => {
     const alert: InjuryAlert = {
       severity: "urgent",
-      title: "Alerta de lesao",
+      title: "Alerta de lesão",
       recommendations: ["Trocar corda", "Baixar tensao"],
     };
     expect(alert.severity).toBe("urgent");

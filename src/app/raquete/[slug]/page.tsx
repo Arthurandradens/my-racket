@@ -21,11 +21,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const racket = getRacketBySlug(rackets, slug);
-  if (!racket) return { title: "Raquete nao encontrada | My Racket" };
+  if (!racket) return { title: "Raquete não encontrada | My Racket" };
   const yearStr = racket.year ? ` ${racket.year}` : "";
   return {
-    title: `${racket.brand} ${racket.model}${yearStr} — Specs, Review e Preco | My Racket`,
-    description: racket.expert_summary_pt ?? `Confira as especificacoes, scores de performance e preco da ${racket.brand} ${racket.model}${yearStr}.`,
+    title: `${racket.brand} ${racket.model}${yearStr} — Specs, review e preço | My Racket`,
+    description: racket.expert_summary_pt ?? `Confira as especificações, scores de performance e preço da ${racket.brand} ${racket.model}${yearStr}.`,
   };
 }
 
@@ -34,8 +34,8 @@ const SCORE_LABELS: { key: keyof Racket["scores"]; label: string }[] = [
   { key: "groundstrokes", label: "Groundstrokes" },
   { key: "volleys", label: "Volleys" },
   { key: "serves", label: "Saques" },
-  { key: "returns", label: "Devolucoes" },
-  { key: "power", label: "Potencia" },
+  { key: "returns", label: "Devoluções" },
+  { key: "power", label: "Potência" },
   { key: "control", label: "Controle" },
   { key: "maneuverability", label: "Manobrabilidade" },
   { key: "stability", label: "Estabilidade" },
@@ -97,7 +97,7 @@ export default async function RaquetePage({ params }: PageProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
         <div className="bg-bg-elevated border border-surface rounded-lg p-6">
-          <h2 className="text-lg font-bold text-text mb-4">Especificacoes</h2>
+          <h2 className="text-lg font-bold text-text mb-4">Especificações</h2>
           <SpecsTable racket={racket} />
         </div>
         <div className="bg-bg-elevated border border-surface rounded-lg p-6">
@@ -112,7 +112,7 @@ export default async function RaquetePage({ params }: PageProps) {
 
       {expert_summary_pt && (
         <div className="bg-bg-elevated border border-surface rounded-lg p-6 mb-8">
-          <h2 className="text-lg font-bold text-text mb-3">Analise dos Especialistas</h2>
+          <h2 className="text-lg font-bold text-text mb-3">Análise dos especialistas</h2>
           <p className="text-text-secondary leading-relaxed">{expert_summary_pt}</p>
         </div>
       )}

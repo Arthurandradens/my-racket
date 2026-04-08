@@ -17,9 +17,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "My Racket — Encontre a raquete ideal para voce",
+  title: "My Racket — Encontre a raquete ideal para você",
   description:
-    "Responda nosso quiz rapido e descubra qual raquete de tenis combina com o seu nivel, estilo de jogo e orcamento. Mais de 1000 raquetes avaliadas.",
+    "Responda nosso quiz rápido e descubra qual raquete de tênis combina com o seu nível, estilo de jogo e orçamento. Mais de 1.000 raquetes avaliadas.",
 };
 
 export default function RootLayout({

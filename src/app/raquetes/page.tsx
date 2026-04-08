@@ -42,7 +42,7 @@ export default function RaquetesPage() {
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="mb-8">
         <h1 className="font-display text-2xl sm:text-4xl font-bold text-text uppercase tracking-wide mb-2">
-          Catalogo de Raquetes
+          Catálogo de raquetes
         </h1>
         <p className="text-text-secondary text-base">
           {totalRackets} raquetes de {totalBrands} marcas

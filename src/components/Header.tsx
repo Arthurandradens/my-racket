@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import Logo from "./Logo";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,15 +26,19 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           <Link
             href="/"
-            className="font-display text-xl font-bold text-accent uppercase tracking-wider hover:text-primary transition-colors"
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            My Racket
+            <Logo size={28} />
+            <span className="font-display text-xl font-bold text-accent uppercase tracking-wider">
+              My Racket
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             <Link href="/quiz" className="text-sm font-medium text-text-secondary hover:text-primary transition-colors">Quiz</Link>
             <Link href="/raquetes" className="text-sm font-medium text-text-secondary hover:text-primary transition-colors">Raquetes</Link>
             <Link href="/comparar" className="text-sm font-medium text-text-secondary hover:text-primary transition-colors">Comparar</Link>
+            <Link href="/guia-empunhadura" className="text-sm font-medium text-text-secondary hover:text-primary transition-colors">Empunhadura</Link>
           </nav>
 
           <button
@@ -61,6 +66,7 @@ export default function Header() {
             <Link href="/quiz" className="py-3 px-3 rounded-md text-sm font-medium text-text-secondary hover:text-primary hover:bg-bg-subtle transition-colors" onClick={() => setMenuOpen(false)}>Quiz</Link>
             <Link href="/raquetes" className="py-3 px-3 rounded-md text-sm font-medium text-text-secondary hover:text-primary hover:bg-bg-subtle transition-colors" onClick={() => setMenuOpen(false)}>Raquetes</Link>
             <Link href="/comparar" className="py-3 px-3 rounded-md text-sm font-medium text-text-secondary hover:text-primary hover:bg-bg-subtle transition-colors" onClick={() => setMenuOpen(false)}>Comparar</Link>
+            <Link href="/guia-empunhadura" className="py-3 px-3 rounded-md text-sm font-medium text-text-secondary hover:text-primary hover:bg-bg-subtle transition-colors" onClick={() => setMenuOpen(false)}>Empunhadura</Link>
           </nav>
         </div>
       )}
