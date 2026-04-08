@@ -8,6 +8,7 @@ import type {
   EducationBlock,
   InjuryAlert,
 } from "./types";
+import { hasProspinLink } from "./affiliate";
 
 const BEGINNER_DEFAULTS: IdealProfile = {
   weight: { min: 265, max: 285, importance: 0.2 },
@@ -631,6 +632,13 @@ export function recommend(
     score: scoreRacket(racket, profile),
     reasons: generateReasons(racket, profile, answers),
   }));
-  scored.sort((a, b) => b.score - a.score);
+  scored.sort((a, b) => {
+    const scoreDiff = b.score - a.score;
+    if (Math.abs(scoreDiff) >= 1) return scoreDiff;
+    // Tiebreak: prefer rackets with Pro Spin link
+    const aLink = hasProspinLink(a.racket.slug) ? 1 : 0;
+    const bLink = hasProspinLink(b.racket.slug) ? 1 : 0;
+    return bLink - aLink;
+  });
   return scored.slice(0, topN);
 }
