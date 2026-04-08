@@ -227,7 +227,7 @@ export default function ResultadoPage() {
         >
           <div className="px-5 py-4 border-b border-surface">
             <h2 className="text-lg font-bold text-text">
-              Perfil de especificacoes recomendado
+              Perfil de especificações recomendado
             </h2>
           </div>
           <div className="overflow-x-auto">
@@ -281,10 +281,10 @@ export default function ResultadoPage() {
         style={{ animation: "fadeInUp 0.6s ease-out 0.2s both" }}
       >
         <h2 className="font-display text-xl sm:text-2xl font-bold text-text uppercase tracking-wide mb-3">
-          Raquetes mais compativeis
+          Raquetes mais compatíveis
         </h2>
         <p className="text-text-secondary text-base">
-          As raquetes mais compativeis com o seu perfil.
+          As raquetes mais compatíveis com o seu perfil.
         </p>
       </div>
 
@@ -315,10 +315,10 @@ export default function ResultadoPage() {
             {item.racket.scores.overall !== null && (
               <div className="bg-bg-elevated border border-surface rounded-lg p-5 flex flex-col gap-3">
                 <h3 className="text-sm font-semibold text-text-secondary mb-1 uppercase tracking-wide">
-                  Pontuacoes tecnicas
+                  Pontuações técnicas
                 </h3>
                 <ScoresBar label="Geral" value={item.racket.scores.overall} animate={phase === "done"} />
-                <ScoresBar label="Potencia" value={item.racket.scores.power} animate={phase === "done"} />
+                <ScoresBar label="Potência" value={item.racket.scores.power} animate={phase === "done"} />
                 <ScoresBar label="Controle" value={item.racket.scores.control} animate={phase === "done"} />
                 <ScoresBar label="Conforto" value={item.racket.scores.comfort} animate={phase === "done"} />
                 <ScoresBar label="Topspin" value={item.racket.scores.topspin} animate={phase === "done"} />
@@ -360,17 +360,27 @@ export default function ResultadoPage() {
       {compareList.length > 0 && (
         <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-accent font-medium text-sm">
-            {compareList.length} raquete{compareList.length > 1 ? "s" : ""} adicionada{compareList.length > 1 ? "s" : ""} para comparacao
+            {compareList.length} raquete{compareList.length > 1 ? "s" : ""} adicionada{compareList.length > 1 ? "s" : ""} para comparação
           </p>
           <button
             type="button"
             onClick={goToComparator}
             className="bg-primary text-white font-bold text-sm px-5 py-2 rounded uppercase tracking-wide hover:bg-primary-hover transition-colors"
           >
-            Ver comparacao
+            Ver comparação
           </button>
         </div>
       )}
+
+      {/* Disclaimer — test before buying */}
+      <div className="bg-bg-elevated border border-surface rounded-lg p-5 sm:p-6">
+        <h3 className="font-display text-base sm:text-lg font-bold text-accent uppercase tracking-wide mb-2">
+          Antes de comprar, teste
+        </h3>
+        <p className="text-text-secondary text-sm leading-relaxed">
+          Especificações e dados ajudam a filtrar as melhores opções para o seu perfil, mas no tênis quem te escolhe é a raquete. Cada jogador tem uma conexão única com o equipamento — peso, balanço e sensação na mão são coisas que só se descobrem jogando. Antes de finalizar a compra, tente testar a raquete em quadra. Muitas lojas especializadas oferecem programas de demo ou empréstimo. Sua raquete ideal é aquela que faz você esquecer que ela está na mão.
+        </p>
+      </div>
 
       {/* Bottom actions */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-surface">
