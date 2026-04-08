@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative bg-bg overflow-hidden py-20 sm:py-28 px-4">
+      <section className="relative bg-bg overflow-hidden px-4 min-h-[calc(100vh-4rem)] flex items-center">
         {/* Diagonal decorative elements */}
         <div
           className="absolute top-0 right-0 w-48 sm:w-72 h-48 sm:h-72 bg-gradient-to-bl from-primary to-accent opacity-80"
@@ -47,7 +47,7 @@ export default function Home() {
       </section>
 
       {/* Como funciona */}
-      <section className="py-16 sm:py-20 px-4 bg-bg-elevated">
+      <section className="px-4 bg-bg-elevated min-h-screen flex items-center py-16 sm:py-20">
         <div className="max-w-5xl mx-auto">
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-center text-text uppercase tracking-wide mb-12 sm:mb-14">
             Como funciona
@@ -90,7 +90,7 @@ export default function Home() {
       </section>
 
       {/* Stats Strip */}
-      <section className="py-12 sm:py-16 px-4 bg-bg relative">
+      <section className="px-4 bg-bg relative min-h-screen flex items-center py-12 sm:py-16">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
         <div className="relative max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
           {[
@@ -111,7 +111,7 @@ export default function Home() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="relative py-16 sm:py-20 px-4 bg-bg-elevated overflow-hidden">
+      <section className="relative px-4 bg-bg-elevated overflow-hidden min-h-screen flex items-center py-16 sm:py-20">
         <div
           className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"
         />

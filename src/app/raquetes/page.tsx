@@ -111,8 +111,8 @@ function CatalogCard({ racket }: { racket: Racket }) {
     <div className="bg-bg-elevated border border-surface rounded-lg hover:border-primary/30 transition-all duration-300 p-5 flex flex-col gap-4 hover:shadow-[0_0_20px_rgba(255,107,53,0.1)]">
       {/* Racket image */}
       {image_url && (
-        <div className="flex justify-center overflow-hidden rounded bg-bg-subtle h-36">
-          <img src={image_url} alt={`${brand} ${model}`} className="w-full h-full object-cover scale-150" loading="lazy" />
+        <div className="flex justify-center overflow-hidden rounded bg-white p-3 h-44">
+          <img src={image_url} alt={`${brand} ${model}`} className="w-full h-full object-contain" loading="lazy" />
         </div>
       )}
       <div>
