@@ -8,6 +8,7 @@ const LEVEL_QUESTION: QuizQuestion = {
     { value: "basico-intermediario", label: "Básico-Intermediário — 3 meses a 2 anos, jogo regularmente" },
     { value: "intermediario", label: "Intermediário — 2+ anos, estilo definido, busco performance" },
     { value: "avancado", label: "Avançado — Competitivo ou 5+ anos intensos" },
+    { value: "junior", label: "Para o meu filho(a) — Busco a raquete certa para uma criança ou adolescente" },
   ],
 };
 
@@ -267,6 +268,69 @@ const ADVANCED_QUESTIONS: QuizQuestion[] = [
   },
 ];
 
+const JUNIOR_QUESTIONS: QuizQuestion[] = [
+  {
+    id: "altura",
+    text: "Qual é a altura aproximada do seu filho(a)?",
+    context: "A altura é o fator mais importante para escolher a raquete certa — mais importante até que a idade. Raquetes muito grandes causam vícios técnicos e podem lesionar o pulso e o cotovelo. Raquetes muito pequenas limitam o desenvolvimento. A medida certa transforma o aprendizado.",
+    options: [
+      { value: "abaixo_110", label: "Abaixo de 110cm" },
+      { value: "110_120", label: "110–120cm" },
+      { value: "120_130", label: "120–130cm" },
+      { value: "130_140", label: "130–140cm" },
+      { value: "140_150", label: "140–150cm" },
+      { value: "150_157", label: "150–157cm" },
+      { value: "acima_157", label: "Acima de 157cm" },
+    ],
+  },
+  {
+    id: "idade",
+    text: "Quantos anos tem seu filho(a)?",
+    context: "A idade ajuda a contextualizar o estágio de desenvolvimento motor e o tipo de jogo esperado. Crianças altas para a idade podem usar raquetes maiores — mas o resultado sempre prioriza a altura que você informou antes.",
+    options: [
+      { value: "3_4", label: "3–4 anos" },
+      { value: "5_6", label: "5–6 anos" },
+      { value: "7_8", label: "7–8 anos" },
+      { value: "9_10", label: "9–10 anos" },
+      { value: "11_12", label: "11–12 anos" },
+      { value: "13_mais", label: "13 anos ou mais" },
+    ],
+  },
+  {
+    id: "nivel_junior",
+    text: "Como você descreveria o envolvimento do seu filho(a) com o tênis?",
+    context: "Isso define o tipo de raquete — e o quanto vale investir. Um iniciante que joga 1x por semana precisa de algo diferente de quem treina 4x e participa de torneios. E não adianta comprar a raquete \"de competição\" se a criança ainda está aprendendo a rebater — pode até atrapalhar.",
+    options: [
+      { value: "primeiro_contato", label: "Experimentando pela primeira vez — nunca jogou" },
+      { value: "recreativo", label: "Aulas recreativas — 1–2x por semana" },
+      { value: "regular", label: "Joga regularmente — 3–4x por semana, escolinhas" },
+      { value: "competitivo", label: "Jogador competitivo — treina diariamente ou participa de torneios" },
+    ],
+  },
+  {
+    id: "queixa",
+    text: "Seu filho(a) já reclamou de alguma dor ou desconforto jogando tênis?",
+    context: "Crianças raramente verbalizam dores até ficarem sérias. Dores no pulso, cotovelo ou ombro após jogar podem ser sinais de que a raquete está grande demais, pesada demais, ou que o encordoamento está errado. Identifique isso cedo — na criança, esses problemas se desenvolvem rapidamente.",
+    options: [
+      { value: "sem_queixa", label: "Não, nunca reclamou de dor" },
+      { value: "queixa_braco", label: "Às vezes reclama do pulso ou cotovelo depois de jogar" },
+      { value: "fadiga_braco", label: "Reclama que a raquete é difícil de mover — fica com o braço cansado" },
+      { value: "sem_historico", label: "Nunca jogou o suficiente para avaliar" },
+    ],
+  },
+  {
+    id: "objetivo_junior",
+    text: "Qual é o principal objetivo de vocês com o tênis agora?",
+    context: "Isso afeta o quanto vale investir e qual aspecto priorizar na recomendação — diversão e motor skills para os menores, ou técnica e progressão para os que querem levar o esporte a sério.",
+    options: [
+      { value: "experimentar", label: "Experimentar o esporte, ver se curte — sem compromisso" },
+      { value: "saude_diversao", label: "Atividade saudável, diversão e exercício" },
+      { value: "tecnica_futuro", label: "Aprender bem a técnica — possibilidade de competir no futuro" },
+      { value: "competicao", label: "Levar o tênis a sério — treinos regulares e competições" },
+    ],
+  },
+];
+
 export function getQuizFlow(level: PlayerLevel): QuizQuestion[] {
   switch (level) {
     case "iniciante":
@@ -277,5 +341,7 @@ export function getQuizFlow(level: PlayerLevel): QuizQuestion[] {
       return [LEVEL_QUESTION, ...INTERMEDIATE_QUESTIONS];
     case "avancado":
       return [LEVEL_QUESTION, ...ADVANCED_QUESTIONS];
+    case "junior":
+      return [LEVEL_QUESTION, ...JUNIOR_QUESTIONS];
   }
 }
