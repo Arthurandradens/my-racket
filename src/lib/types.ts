@@ -44,50 +44,45 @@ export interface IdealProfile {
   head_size: SpecRange;
   ra: SpecRange;
   balance_mm: SpecRange;
+  swingweight: SpecRange;
+  preferred_patterns: string[];
+  pattern_importance: number;
 }
 
-export type PlayerLevel = "iniciante" | "intermediario" | "avancado";
-
-export type PlayStyle = "baseline" | "serve-and-volley" | "all-court";
-
-export type Physique = "pequeno" | "medio" | "grande";
-
-export type Frequency = "1-2x" | "3-4x" | "5+";
-
-export type Injury = "nenhuma" | "cotovelo" | "ombro" | "punho";
-
-export type Budget = "baixo" | "medio" | "alto";
-
-export type MainShot = "forehand" | "backhand" | "saque";
-
-export type Improvement = "potencia" | "controle" | "spin";
-
-export type ChangeDesired = "mais-potencia" | "mais-controle" | "mais-spin" | "mais-conforto" | "mais-leve" | "mais-pesada";
-
-export interface TechPreferences {
-  weight: "leve" | "media" | "pesada";
-  balance: "head-light" | "equilibrada" | "head-heavy";
-  stiffness: "flexivel" | "media" | "rigida";
-}
+export type PlayerLevel = "iniciante" | "basico-intermediario" | "intermediario" | "avancado";
 
 export interface QuizAnswers {
   level: PlayerLevel;
-  frequency?: Frequency;
-  physique?: Physique;
-  practice_time?: string;
-  play_style?: PlayStyle;
-  improvement?: Improvement;
-  main_shot?: MainShot;
-  tech_preferences?: TechPreferences;
-  change_desired?: ChangeDesired;
-  injury?: Injury;
-  current_racket?: string;
-  budget?: Budget;
+  // Iniciante
+  lesao?: string;
+  fisico?: string;
+  objetivo?: string;
+  frequencia?: string;
+  estilo_basico?: string;
+  // Basico-Intermediario
+  tempo?: string;
+  encordoamento?: string;
+  padrao?: string;
+  padrao_encordoamento?: string;
+  estilo?: string;
+  // Intermediario
+  padrao_enc?: string;
+  peso?: string;
+  problema_atual?: string;
+  rigidez?: string;
+  // Avancado
+  necessidade?: string;
+  estilo_avancado?: string;
+  padrao_enc_avancado?: string;
+  swingweight?: string;
+  lesao_avancado?: string;
+  corda_atual?: string;
 }
 
 export interface QuizQuestion {
   id: string;
   text: string;
+  context?: string;
   options: { value: string; label: string }[];
 }
 
@@ -95,4 +90,22 @@ export interface ScoredRacket {
   racket: Racket;
   score: number;
   reasons: string[];
+}
+
+export interface SpecRecommendation {
+  spec: string;
+  value: string;
+  reason: string;
+}
+
+export interface EducationBlock {
+  id: string;
+  title: string;
+  content: string;
+}
+
+export interface InjuryAlert {
+  severity: "warning" | "urgent";
+  title: string;
+  recommendations: string[];
 }
